@@ -7,20 +7,7 @@
   "source": "https://github.com/voxpupuli/puppet-prometheus.git",
   "project_page": "https://github.com/voxpupuli/puppet-prometheus",
   "issue_url": "https://github.com/voxpupuli/puppet-prometheus/issues",
-  "dependencies": [
-    {
-      "name": "puppetlabs/stdlib",
-      "version_requirement": ">= 4.25.0 < 9.0.0"
-    },
-    {
-      "name": "puppet/systemd",
-      "version_requirement": ">= 1.1.1 < 4.0.0"
-    },
-    {
-      "name": "puppet/archive",
-      "version_requirement": ">= 2.2.0 < 7.0.0"
-    }
-  ],
+  "dependencies": [],
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",
