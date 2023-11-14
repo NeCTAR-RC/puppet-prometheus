@@ -55,6 +55,8 @@ define prometheus::daemon (
   String $download_extension              = $prometheus::download_extension,
   String[1] $os                           = $prometheus::os,
   String[1] $arch                         = $prometheus::real_arch,
+  String $checksum_type                   = 'sha256',
+  Optional[String] $checksum              = undef,
   Stdlib::Absolutepath $bin_dir           = $prometheus::bin_dir,
   String[1] $bin_name                     = $name,
   Optional[String] $package_name          = undef,
@@ -80,6 +82,11 @@ define prometheus::daemon (
   Hash $scrape_job_labels                 = { 'alias' => $scrape_host },
   Stdlib::Absolutepath $usershell         = $prometheus::usershell,
 ) {
+  if $checksum {
+    $checksum_verify = true
+  } else {
+    $checksum_verify = false
+  }
   case $install_method {
     'url': {
       if $download_extension == '' {
@@ -92,7 +99,9 @@ define prometheus::daemon (
         -> archive { "/opt/${name}-${version}.${os}-${arch}/${name}":
           ensure          => present,
           source          => $real_download_url,
-          checksum_verify => false,
+          checksum        => $checksum,
+          checksum_type   => $checksum_type,
+          checksum_verify => $checksum_verify,
           before          => File["/opt/${name}-${version}.${os}-${arch}/${name}"],
         }
       } else {
@@ -101,7 +110,9 @@ define prometheus::daemon (
           extract         => true,
           extract_path    => $extract_path,
           source          => $real_download_url,
-          checksum_verify => false,
+          checksum        => $checksum,
+          checksum_type   => $checksum_type,
+          checksum_verify => $checksum_verify,
           creates         => $archive_bin_path,
           cleanup         => true,
           before          => File[$archive_bin_path],
