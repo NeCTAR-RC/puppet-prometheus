@@ -1,0 +1,19 @@
+<%- | String $region_name,
+      String $username,
+      String $password,
+      String $project_name,
+      String $project_domain_name,
+      String $user_domain_name,
+      String $auth_url
+| -%>
+clouds:
+  default:
+    region_name: <%= $region_name %>
+    identity_api_version: 3
+    auth:
+      username: <%= $username %>
+      password: <%= $password %>
+      project_name: <%= $project_name %>
+      project_domain_name: <%= $project_domain_name %>
+      user_domain_name: <%= $user_domain_name %>
+      auth_url: <%= $auth_url %>
