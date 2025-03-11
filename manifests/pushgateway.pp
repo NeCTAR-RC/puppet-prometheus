@@ -72,6 +72,10 @@ class prometheus::pushgateway (
   String[1] $bin_dir                                         = $prometheus::bin_dir,
   Optional[String[1]] $proxy_server                          = undef,
   Optional[Enum['none', 'http', 'https', 'ftp']] $proxy_type = undef,
+  Boolean $export_scrape_job                                 = false,
+  Stdlib::Port $scrape_port                                  = 9091,
+  String[1] $scrape_job_name                                 = 'pushgateway',
+  Optional[Hash] $scrape_job_labels                          = undef,
 ) inherits prometheus {
   # Prometheus added a 'v' on the realease name at 0.3.0
   if versioncmp ($version, '0.3.0') >= 0 {
@@ -109,5 +113,9 @@ class prometheus::pushgateway (
     manage_service     => $manage_service,
     proxy_server       => $proxy_server,
     proxy_type         => $proxy_type,
+    export_scrape_job  => $export_scrape_job,
+    scrape_port        => $scrape_port,
+    scrape_job_name    => $scrape_job_name,
+    scrape_job_labels  => $scrape_job_labels,
   }
 }
